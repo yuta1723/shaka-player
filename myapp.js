@@ -1,7 +1,7 @@
 // myapp.js
 
 var manifestUri =
-    'https://storage.googleapis.com/shaka-demo-assets/angel-one/dash.mpd';
+    'https://storage.googleapis.com/shaka-demo-assets/angel-one-clearkey/dash.mpd';
 
 function initApp() {
   // Install built-in polyfills to patch browser incompatibilities.
@@ -21,6 +21,24 @@ function initPlayer() {
   // Create a Player instance.
   var video = document.getElementById('video');
   var player = new shaka.Player(video);
+
+  // var configration = {
+  //   drm : {
+  //     servers : {
+  //       org.w3.clearkey :
+  //     }
+  //   }
+  // }
+  // player.configure('drm.servers.org\.w3\.clearkey','https://cwip-shaka-proxy.appspot.com/clearkey?_u3wDe7erb7v8Lqt8A3QDQ=ABEiM0RVZneImaq7zN3u_w');
+
+  player.configure({
+    drm: {
+      servers: {
+        'org.w3.clearkey': 'https://cwip-shaka-proxy.appspot.com/clearkey?_u3wDe7erb7v8Lqt8A3QDQ=ABEiM0RVZneImaq7zN3u_w'
+      }
+    }
+  });
+
 
   // Attach player to the window to make it easy to access in the JS console.
   window.player = player;
