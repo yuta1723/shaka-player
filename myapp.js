@@ -1,9 +1,9 @@
 // myapp.js
 
-var manifestUri =
+// var manifestUri =
     'https://storage.googleapis.com/shaka-demo-assets/angel-one-clearkey/dash.mpd';
 
-// var manifestUri = 'https://path/content.mpd';
+var manifestUri = 'https://tsg01.uliza.jp/ulizahtml5/content/dash/customer01/bbb_2M_100sec.mpd';
 
 function initApp() {
   // Install built-in polyfills to patch browser incompatibilities.
