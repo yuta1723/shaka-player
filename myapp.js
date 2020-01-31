@@ -1,9 +1,10 @@
 // myapp.js
 
 // var manifestUri =
-    'https://storage.googleapis.com/shaka-demo-assets/angel-one-clearkey/dash.mpd';
+    // 'https://storage.googleapis.com/shaka-demo-assets/angel-one-clearkey/dash.mpd';
 
-var manifestUri = 'https://tsg01.uliza.jp/ulizahtml5/content/dash/customer01/bbb_2M_100sec.mpd';
+// var manifestUri = 'https://tsg01.uliza.jp/ulizahtml5/content/dash/customer01/bbb_2M_100sec.mpd';
+var manifestUri = 'https://storage.googleapis.com/wvmedia/cenc/h264/tears/tears_sd.mpd';
 
 function initApp() {
   // Install built-in polyfills to patch browser incompatibilities.
@@ -97,8 +98,8 @@ function initPlayer() {
     }
   };
 
-  player.getNetworkingEngine().registerResponseFilter(licenseRequestFilter);
-  player.getNetworkingEngine().registerResponseFilter(licenseResponseFilter);
+  // player.getNetworkingEngine().registerResponseFilter(licenseRequestFilter);
+  // player.getNetworkingEngine().registerResponseFilter(licenseResposeFilter);
 
 
   player.configure({
@@ -107,7 +108,7 @@ function initPlayer() {
         // Android/iOS は wvstreamidだが、HTML5は streamid .
         // PSSH はdash manifest に記載されている
         // またURL encode を行わないと、 php の POSTの際に pssh に + が入っていたら空白になってしまい問題になる。
-        'com.widevine.alpha': 'https://tsg01.uliza.jp/ulizahtml5/dash_api/rights_issuer.php?streamid=bbb_2M_100sec&pssh=AAAAWHBzc2gAAAAA7e%2BLqXnWSs6jyCfc1R0h7QAAADgIARIQxXcyfkNpsb3dz3hYVXtRrxoMc2tpbGx1cHZpZGVvIg1iYmJfMk1fMTAwc2VjKgVTRF9IRA%3D%3D'
+        'com.widevine.alpha': 'https://proxy.uat.widevine.com/proxy'
       },
       advanced: {
         'com.widevine.alpha': {
