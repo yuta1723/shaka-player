@@ -32,13 +32,13 @@ function initPlayer() {
   // 1 : for Google Widevine Contents.
   // 2 : for PLAY Packaged Widevine Contents (hybrid)
   // 3 : for PLAY Packaged Widevine Contents (widevine)
-  var playbackContentType = 1;
+  var playbackContentType = 7;
 
 
   var configration = null;
   var widevineServiceCertificate = 'CsECCAMSEBcFuRfMEgSGiwYzOi93KowYgrSCkgUijgIwggEKAoIBAQCZ7Vs7Mn2rXiTvw7YqlbWYUgrVvMs3UD4GRbgU2Ha430BRBEGtjOOtsRu4jE5yWl5KngeVKR1YWEAjp+GvDjipEnk5MAhhC28VjIeMfiG/+/7qd+EBnh5XgeikX0YmPRTmDoBYqGB63OBPrIRXsTeo1nzN6zNwXZg6IftO7L1KEMpHSQykfqpdQ4IY3brxyt4zkvE9b/tkQv0x4b9AsMYE0cS6TJUgpL+X7r1gkpr87vVbuvVk4tDnbNfFXHOggrmWEguDWe3OJHBwgmgNb2fG2CxKxfMTRJCnTuw3r0svAQxZ6ChD4lgvC2ufXbD8Xm7fZPvTCLRxG88SUAGcn1oJAgMBAAE6FGxpY2Vuc2Uud2lkZXZpbmUuY29tEoADrjRzFLWoNSl/JxOI+3u4y1J30kmCPN3R2jC5MzlRHrPMveoEuUS5J8EhNG79verJ1BORfm7BdqEEOEYKUDvBlSubpOTOD8S/wgqYCKqvS/zRnB3PzfV0zKwo0bQQQWz53ogEMBy9szTK/NDUCXhCOmQuVGE98K/PlspKkknYVeQrOnA+8XZ/apvTbWv4K+drvwy6T95Z0qvMdv62Qke4XEMfvKUiZrYZ/DaXlUP8qcu9u/r6DhpV51Wjx7zmVflkb1gquc9wqgi5efhn9joLK3/bNixbxOzVVdhbyqnFk8ODyFfUnaq3fkC3hR3f0kmYgI41sljnXXjqwMoW9wRzBMINk+3k6P8cbxfmJD4/Paj8FwmHDsRfuoI6Jj8M76H3CTsZCZKDJjM3BQQ6Kb2m+bQ0LMjfVDyxoRgvfF//M/EEkPrKWyU2C3YBXpxaBquO4C8A0ujVmGEEqsxN1HX9lu6c5OMm8huDxwWFd7OHMs3avGpr7RP7DUnTikXrh6X0';
   var addedLicenseStatusFlag = false;
-
+  var addedLicenseRequestFilterFlag = false;
 
 
   if (playbackContentType === 0) {
@@ -101,16 +101,95 @@ function initPlayer() {
       }
     }
     addedLicenseStatusFlag = true;
+  } else if (playbackContentType === 5) {
+    // drm widevine content packaged play, inc.
+    manifestUri = 'https://d1pw4oisbnjibh.cloudfront.net/contents/dash/widevine/bbb_2M_100sec.mpd';
+    configration = {
+      drm : {
+        servers : {
+          'com.widevine.alpha' :'https://tsg01.uliza.jp/ulizahtml5/dash_api/rights_issuer.php?streamid=bbb_2M_100sec'
+        },
+        advanced: {
+          'com.widevine.alpha': {
+          'serverCertificate': base64ToUint8Array(widevineServiceCertificate),
+            'videoRobustness': 'SW_SECURE_CRYPTO',
+            'audioRobustness': 'SW_SECURE_CRYPTO'
+          }
+        }
+      }
+    }
+    addedLicenseStatusFlag = true;
+    addedLicenseRequestFilterFlag = true;
+  } else if (playbackContentType === 6) {
+    // drm hybrid content packaged play, inc.
+    manifestUri = 'https://tsg01.uliza.jp/ulizahtml5/content/dash/customer01/bbb_2M_100sec.mpd';
+    configration = {
+      drm : {
+        servers : {
+          'com.widevine.alpha' :'https://tsg01.uliza.jp/ulizahtml5/dash_api/rights_issuer.php?streamid=bbb_2M_100sec'
+        },
+        advanced: {
+          'com.widevine.alpha': {
+            'serverCertificate': base64ToUint8Array(widevineServiceCertificate),
+            'videoRobustness': 'SW_SECURE_CRYPTO',
+            'audioRobustness': 'SW_SECURE_CRYPTO'
+          }
+        }
+      }
+    }
+    addedLicenseStatusFlag = true;
+    addedLicenseRequestFilterFlag = true;
+  } else if (playbackContentType === 7) {
+    // drm hybrid content packaged play, inc.
+    manifestUri = 'https://tsg01.uliza.jp/dash/contents/customer01/wv_sample.mpd';
+    configration = {
+      drm : {
+        servers : {
+          'com.widevine.alpha' :'https://wvlp02.uliza.jp/lp/customer01/GetEMMs2.php?serverid=skillup&streamid=sample_episode&pssh=AAAAW3Bzc2gAAAAA7e%2BLqXnWSs6jyCfc1R0h7QAAADsIARIQQNDa0Kz7m%2BknpQMkJ9yUwBoMc2tpbGx1cHZpZGVvIg5zYW1wbGVfZXBpc29kZSoFU0RfSEQyAA%3D%3D'
+        },
+        advanced: {
+          'com.widevine.alpha': {
+            'serverCertificate': base64ToUint8Array(widevineServiceCertificate),
+            'videoRobustness': 'SW_SECURE_CRYPTO',
+            'audioRobustness': 'SW_SECURE_CRYPTO'
+          }
+        }
+      }
+    }
+    addedLicenseStatusFlag = true;
+    addedLicenseRequestFilterFlag = true;
   }
-  player.configure(configration);
+
+  var licenseRequestFilter = function(request, drmInfo) {
+    // Log.enter(Log.t, TAG, 'updateWidevineLicenseRequest');
+    if (!drmInfo || !drmInfo.initData) {
+      return;
+    }
+    var initDataAry = drmInfo.initData;
+    if (initDataAry.length < 1 || initDataAry[0].initData.length < 1) {
+      return;
+    }
+    var psshStr = btoa(String.fromCharCode.apply(null, initDataAry[0].initData));
+    var psshQueryParam = 'pssh=' + encodeURIComponent(psshStr);
+    var uriCount = request.uris.length;
+    for (var i = 0; i < uriCount; i++) {
+      var uri = request.uris[i];
+      if (uri.indexOf('&') === -1) {
+        if (uri.indexOf('?') === -1) {
+          uri = uri + '?' + psshQueryParam;
+        } else {
+          uri = uri + '&' + psshQueryParam;
+        }
+      } else {
+        uri = uri + '&' + psshQueryParam;
+      }
+      request.uris[i] = uri;
+    }
+  };
 
   var licenseResponseFilter = function(type, response) {
     //Log.enter(Log.t, TAG, 'licenseResponseFilter');
     if (type !== shaka.net.NetworkingEngine.RequestType.LICENSE) {
-      return;
-    }
-
-    if ( ! addedLicenseStatusFlag) {
       return;
     }
 
@@ -156,7 +235,17 @@ function initPlayer() {
 
 
 
-  player.getNetworkingEngine().registerResponseFilter(licenseResponseFilter);
+  if (addedLicenseRequestFilterFlag)  {
+    player.getNetworkingEngine().registerRequestFilter(licenseRequestFilter);
+  }
+
+  if (addedLicenseStatusFlag) {
+    player.getNetworkingEngine().registerResponseFilter(licenseResponseFilter);
+  }
+
+
+  player.configure(configration);
+
 
   // Attach player to the window to make it easy to access in the JS console.
   window.player = player;
