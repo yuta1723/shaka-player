@@ -32,7 +32,7 @@ function initPlayer() {
   // 1 : for Google Widevine Contents.
   // 2 : for PLAY Packaged Widevine Contents (hybrid)
   // 3 : for PLAY Packaged Widevine Contents (widevine)
-  var playbackContentType = 7;
+  var playbackContentType = 15;
 
 
   var configration = null;
@@ -158,6 +158,162 @@ function initPlayer() {
     }
     addedLicenseStatusFlag = true;
     addedLicenseRequestFilterFlag = true;
+  } else if (playbackContentType === 8) {
+    // drm hybrid content packaged play, inc.
+    manifestUri = 'https://tsg01.uliza.jp/dash/contents/customer01/wv_sample.mpd';
+    configration = {
+      drm : {
+        servers : {
+          'com.widevine.alpha' :'https://wvlp02.uliza.jp/lp/customer01/GetEMMs4.php?serverid=skillup&streamid=sample_episode&pssh=AAAAW3Bzc2gAAAAA7e%2BLqXnWSs6jyCfc1R0h7QAAADsIARIQQNDa0Kz7m%2BknpQMkJ9yUwBoMc2tpbGx1cHZpZGVvIg5zYW1wbGVfZXBpc29kZSoFU0RfSEQyAA%3D%3D'
+        },
+        advanced: {
+          'com.widevine.alpha': {
+            'serverCertificate': base64ToUint8Array(widevineServiceCertificate),
+            'videoRobustness': 'SW_SECURE_CRYPTO',
+            'audioRobustness': 'SW_SECURE_CRYPTO'
+          }
+        }
+      }
+    }
+    addedLicenseStatusFlag = false;
+    addedLicenseRequestFilterFlag = false;
+  } else if (playbackContentType === 9) {
+    // drm hybrid content packaged play, inc.
+    // used rights_issuer (getEmms2.php)
+    manifestUri = 'https://tsg01.uliza.jp/dash/contents/customer01/wv_sample.mpd';
+    configration = {
+      drm : {
+        servers : {
+          'com.widevine.alpha' :'https://tsg01.uliza.jp/naito/lab/shaka/rights_issuer.php?streamid=sample_episode&pssh=AAAAW3Bzc2gAAAAA7e%2BLqXnWSs6jyCfc1R0h7QAAADsIARIQQNDa0Kz7m%2BknpQMkJ9yUwBoMc2tpbGx1cHZpZGVvIg5zYW1wbGVfZXBpc29kZSoFU0RfSEQyAA%3D%3D'
+        },
+        advanced: {
+          'com.widevine.alpha': {
+            '_serverCertificate': base64ToUint8Array(widevineServiceCertificate),
+            'videoRobustness': 'SW_SECURE_CRYPTO',
+            'audioRobustness': 'SW_SECURE_CRYPTO'
+          }
+        }
+      }
+    }
+    addedLicenseStatusFlag = true;
+    addedLicenseRequestFilterFlag = false;
+  } else if (playbackContentType === 10) {
+    // drm hybrid content packaged play, inc.
+    // used rights_issuer (getEmms2.php)
+    manifestUri = 'https://tsg01.uliza.jp/dash/contents/customer01/wv_sample.mpd';
+    configration = {
+      drm : {
+        servers : {
+          'com.widevine.alpha' :'https://tsg01.uliza.jp/naito/lab/shaka/rights_issuer_emms4.php?streamid=sample_episode&pssh=AAAAW3Bzc2gAAAAA7e%2BLqXnWSs6jyCfc1R0h7QAAADsIARIQQNDa0Kz7m%2BknpQMkJ9yUwBoMc2tpbGx1cHZpZGVvIg5zYW1wbGVfZXBpc29kZSoFU0RfSEQyAA%3D%3D'
+        },
+        advanced: {
+          'com.widevine.alpha': {
+            'serverCertificate': base64ToUint8Array(widevineServiceCertificate),
+            'videoRobustness': 'SW_SECURE_CRYPTO',
+            'audioRobustness': 'SW_SECURE_CRYPTO'
+          }
+        }
+      }
+    }
+    addedLicenseStatusFlag = false;
+    addedLicenseRequestFilterFlag = false;
+  } else if (playbackContentType === 11) {
+    // drm hybrid content packaged play, inc.
+    // used rights_issuer (getEmms2.php)
+    manifestUri = 'https://tsg01.uliza.jp/ulizahtml5/content/dash/customer01/bbb_2M_100sec.mpd';
+    configration = {
+      drm : {
+        servers : {
+          'com.widevine.alpha' :'https://tsg01.uliza.jp/naito/lab/shaka/rights_issuer_naito.php?streamid=bbb_2M_100sec&pssh=AAAAWHBzc2gAAAAA7e%2BLqXnWSs6jyCfc1R0h7QAAADgIARIQxXcyfkNpsb3dz3hYVXtRrxoMc2tpbGx1cHZpZGVvIg1iYmJfMk1fMTAwc2VjKgVTRF9IRA%3D%3D'
+        },
+        advanced: {
+          'com.widevine.alpha': {
+            'serverCertificate': base64ToUint8Array(widevineServiceCertificate),
+            'videoRobustness': 'SW_SECURE_CRYPTO',
+            'audioRobustness': 'SW_SECURE_CRYPTO'
+          }
+        }
+      }
+    }
+    addedLicenseStatusFlag = false;
+    addedLicenseRequestFilterFlag = false;
+  } else if (playbackContentType === 12) {
+    // drm hybrid content packaged play, inc.
+    // used rights_issuer (getEmms2.php)
+    manifestUri = 'https://d1pw4oisbnjibh.cloudfront.net/contents/dash/widevine/bbb_2M_100sec.mpd';
+    configration = {
+      drm : {
+        servers : {
+          'com.widevine.alpha' :'https://tsg01.uliza.jp/naito/lab/shaka/rights_issuer_emms5.php?streamid=bbb_2M_100sec&pssh=AAAAWHBzc2gAAAAA7e%2BLqXnWSs6jyCfc1R0h7QAAADgIARIQxXcyfkNpsb3dz3hYVXtRrxoMc2tpbGx1cHZpZGVvIg1iYmJfMk1fMTAwc2VjKgVTRF9IRA%3D%3D'
+        },
+        advanced: {
+          'com.widevine.alpha': {
+            '_serverCertificate': base64ToUint8Array(widevineServiceCertificate),
+            'videoRobustness': 'SW_SECURE_CRYPTO',
+            'audioRobustness': 'SW_SECURE_CRYPTO'
+          }
+        }
+      }
+    }
+    addedLicenseStatusFlag = false;
+    addedLicenseRequestFilterFlag = false;
+  } else if (playbackContentType === 13) {
+    // drm hybrid content packaged play, inc.
+    manifestUri = 'https://tsg01.uliza.jp/dash/contents/customer01/wv_sample_naito.mpd';
+    configration = {
+      drm : {
+        servers : {
+          'com.widevine.alpha' :'https://tsg01.uliza.jp/naito/lab/shaka/rights_issuer_emms4.php?serverid=skillup&streamid=sample_episode&pssh=AAAAW3Bzc2gAAAAA7e%2BLqXnWSs6jyCfc1R0h7QAAADsIARIQQNDa0Kz7m%2BknpQMkJ9yUwBoMc2tpbGx1cHZpZGVvIg5zYW1wbGVfZXBpc29kZSoFU0RfSEQyAA%3D%3D'
+        },
+        advanced: {
+          'com.widevine.alpha': {
+            'serverCertificate': base64ToUint8Array(widevineServiceCertificate),
+            'videoRobustness': 'SW_SECURE_CRYPTO',
+            'audioRobustness': 'SW_SECURE_CRYPTO'
+          }
+        }
+      }
+    }
+    addedLicenseStatusFlag = false;
+    addedLicenseRequestFilterFlag = false;
+  } else if (playbackContentType === 14) {
+    // drm hybrid content packaged play, inc.
+    manifestUri = 'https://tsg01.uliza.jp/ulizahtml5/content/dash/customer01/bbb_2M_100sec_naito.mpd';
+    configration = {
+      drm : {
+        servers : {
+          'com.widevine.alpha' :'https://tsg01.uliza.jp/naito/lab/shaka/rights_issuer_emms5.php?serverid=skillup&streamid=sample_episode&pssh=AAAAW3Bzc2gAAAAA7e%2BLqXnWSs6jyCfc1R0h7QAAADsIARIQQNDa0Kz7m%2BknpQMkJ9yUwBoMc2tpbGx1cHZpZGVvIg5zYW1wbGVfZXBpc29kZSoFU0RfSEQyAA%3D%3D'
+        },
+        advanced: {
+          'com.widevine.alpha': {
+            'serverCertificate': base64ToUint8Array(widevineServiceCertificate),
+            'videoRobustness': 'SW_SECURE_CRYPTO',
+            'audioRobustness': 'SW_SECURE_CRYPTO'
+          }
+        }
+      }
+    }
+    addedLicenseStatusFlag = false;
+    addedLicenseRequestFilterFlag = false;
+  } else if (playbackContentType === 15) {
+    // drm hybrid content packaged play, inc.
+    manifestUri = 'https://tsg01.uliza.jp/dash/contents/widevine_test/h264.mpd';
+    configration = {
+      drm : {
+        servers : {
+          'com.widevine.alpha' :'https://tsg01.uliza.jp/naito/lab/shaka/rights_issuer_emms5.php?serverid=skillup&streamid=sample_episode&pssh=AAAAMXBzc2gAAAAA7e%2BLqXnWSs6jyCfc1R0h7QAAABEiD3Rlc3QgY29udGVudCBpZA%3D%3D&ls=dev'
+        },
+        advanced: {
+          'com.widevine.alpha': {
+            '_serverCertificate': base64ToUint8Array(widevineServiceCertificate),
+            'videoRobustness': 'SW_SECURE_CRYPTO',
+            'audioRobustness': 'SW_SECURE_CRYPTO'
+          }
+        }
+      }
+    }
+    addedLicenseStatusFlag = false;
+    addedLicenseRequestFilterFlag = false;
   }
 
   var licenseRequestFilter = function(request, drmInfo) {
